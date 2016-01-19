@@ -10,14 +10,72 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+    //variables
+    var currentTotal = 0
+    var multiple = 0
+    
+    //outlets
+    
+    @IBOutlet weak var play: UIButton!
+    @IBOutlet weak var whatMultiple: UITextField!
+    @IBOutlet weak var logo: UIImageView!
+    
+    
+    @IBOutlet weak var add: UIButton!
+    @IBOutlet weak var addResult: UITextField!
+    
+    @IBAction func onAdd(sender: UIButton!){
+        updateTotal()
+        
+        if isGameOver(){
+            restartGame()
+        }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    @IBAction func onPlay(sender: UIButton){
+        if whatMultiple.text != nil && whatMultiple.text != ""{
+            
+            play.hidden = true
+            whatMultiple.hidden = true
+            logo.hidden = true
+            
+            add.hidden = false
+            addResult.hidden = false
+            
+            multiple = Int(whatMultiple.text!)!
+            currentTotal = 0
+            
+            updateTotal()
+        }
+    }
+    
+    func updateTotal(){
+        var newCurrentTotal = 0
+        newCurrentTotal = currentTotal + multiple
+        addResult.text = "\(currentTotal) + \(multiple) = \(newCurrentTotal)"
+        currentTotal = newCurrentTotal
+    }
+    
+    func isGameOver() -> Bool{
+        if currentTotal > 50{
+            return true
+        }
+        else{
+            return false
+        }
+    }
+    
+    func restartGame(){
+    
+        currentTotal = 0
+        whatMultiple.text = ""
+    
+        play.hidden = false
+        whatMultiple.hidden = false
+        logo.hidden = false
+    
+        add.hidden = true
+        addResult.hidden = true
     }
 
 
